@@ -24,6 +24,9 @@ function getSizeBrutal(unit, element) {
 function toPX(str, element) {
   element = element || document.body
   str = (str || 'px').trim().toLowerCase()
+  if(element === window || element === document) {
+    element = document.body 
+  }
   switch(str) {
     case '%':  //Ambiguous, not sure if we should use width or height
       return element.clientHeight / 100.0
