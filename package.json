@@ -1,6 +1,6 @@
 {
   "name": "to-px",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert any CSS unit to logical pixels (\"px\")",
   "main": "topx.js",
   "directories": {
