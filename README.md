@@ -2,6 +2,8 @@ to-px
 =====
 Get the scale factor to convert any CSS unit to `px` (logical pixel units).
 
+[![testling badge](https://ci.testling.com/mikolalysenko/to-px.png)](https://ci.testling.com/mikolalysenko/to-px)
+
 # Example
 
 ```javascript
