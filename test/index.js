@@ -15,11 +15,13 @@ tape('test to-px', function(t) {
     var testDiv = document.createElement('div')
     element.appendChild(testDiv)
     for(var i=0; i<units.length; ++i) {
-      testDiv.style['font-size'] = '128' + units[i]
-      var expected = parseUnit(getComputedStyle(testDiv).getPropertyValue('font-size'))[0]/128
+      testDiv.style['height'] = '128' + units[i]
+      testDiv.style.position = 'absolute'
+      testDiv.style.width = '1px'
+      var expected = parseUnit(getComputedStyle(testDiv).getPropertyValue('height'))[0]/128
       var actual = toPX(units[i], element)
 
-      t.ok(almostEqual(actual, expected, 0.005, almostEqual.FLT_EPSILON), 
+      t.ok(almostEqual(actual, expected, 0.005, almostEqual.FLT_EPSILON),
         'testing: ' + units[i] + ' ' + actual + ' ~ ' + expected)
     }
     element.removeChild(testDiv)

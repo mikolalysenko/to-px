@@ -6,6 +6,7 @@ module.exports = toPX
 
 var PIXELS_PER_INCH = 96
 
+
 function getPropertyInPX(element, prop) {
   var parts = parseUnit(getComputedStyle(element).getPropertyValue(prop))
   return parts[0] * toPX(parts[1], element)
@@ -14,9 +15,9 @@ function getPropertyInPX(element, prop) {
 //This brutal hack is needed
 function getSizeBrutal(unit, element) {
   var testDIV = document.createElement('div')
-  testDIV.style['font-size'] = '128' + unit
+  testDIV.style['height'] = '128' + unit
   element.appendChild(testDIV)
-  var size = getPropertyInPX(testDIV, 'font-size') / 128
+  var size = getPropertyInPX(testDIV, 'height') / 128
   element.removeChild(testDIV)
   return size
 }
@@ -25,7 +26,7 @@ function toPX(str, element) {
   element = element || document.body
   str = (str || 'px').trim().toLowerCase()
   if(element === window || element === document) {
-    element = document.body 
+    element = document.body
   }
   switch(str) {
     case '%':  //Ambiguous, not sure if we should use width or height
