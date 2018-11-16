@@ -4,7 +4,7 @@ var parseUnit = require('parse-unit')
 
 module.exports = toPX
 
-var PIXELS_PER_INCH = 96
+var PIXELS_PER_INCH = getSizeBrutal('in', document.body) // 96
 
 
 function getPropertyInPX(element, prop) {
