@@ -23,8 +23,10 @@ function getSizeBrutal(unit, element) {
 }
 
 function toPX(str, element) {
+  if (!str) return null
+
   element = element || document.body
-  str = (str || 'px').trim().toLowerCase()
+  str = (str + '' || 'px').trim().toLowerCase()
   if(element === window || element === document) {
     element = document.body
   }
@@ -63,7 +65,10 @@ function toPX(str, element) {
 
   // detect number of units
   var parts = parseUnit(str)
-  if (!isNaN(parts[0])) return parts[0] * toPX(parts[1], element)
+  if (!isNaN(parts[0]) && parts[1]) {
+    var px = toPX(parts[1], element)
+    return typeof px === 'number' ? parts[0] * px : null
+  }
 
-  return 1
+  return null
 }
