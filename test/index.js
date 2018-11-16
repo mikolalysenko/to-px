@@ -19,10 +19,22 @@ tape('test to-px', function(t) {
       testDiv.style.position = 'absolute'
       testDiv.style.width = '1px'
       var expected = parseUnit(getComputedStyle(testDiv).getPropertyValue('height'))[0]/128
+      var value = units[i]
       var actual = toPX(units[i], element)
 
       t.ok(almostEqual(actual, expected, 0.005, almostEqual.FLT_EPSILON),
         'testing: ' + units[i] + ' ' + actual + ' ~ ' + expected)
+
+      value = '1' + units[i]
+      actual = toPX(value, element)
+      t.ok(almostEqual(actual, expected, 0.005, almostEqual.FLT_EPSILON),
+        'testing: ' + value + ' ' + actual + ' ~ ' + expected)
+
+      value = '.14' + units[i]
+      actual = toPX(value, element)
+      expected *= .14
+      t.ok(almostEqual(actual, expected, 0.005, almostEqual.FLT_EPSILON),
+        'testing: ' + value + ' ' + actual + ' ~ ' + expected)
     }
     element.removeChild(testDiv)
   }

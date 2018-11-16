@@ -28,6 +28,7 @@ function toPX(str, element) {
   if(element === window || element === document) {
     element = document.body
   }
+
   switch(str) {
     case '%':  //Ambiguous, not sure if we should use width or height
       return element.clientHeight / 100.0
@@ -56,6 +57,13 @@ function toPX(str, element) {
       return PIXELS_PER_INCH / 72
     case 'pc':
       return PIXELS_PER_INCH / 6
+    case 'px':
+      return 1
   }
+
+  // detect number of units
+  var parts = parseUnit(str)
+  if (!isNaN(parts[0])) return parts[0] * toPX(parts[1], element)
+
   return 1
 }
