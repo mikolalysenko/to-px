@@ -4,7 +4,8 @@ var parseUnit = require('parse-unit')
 
 module.exports = toPX
 
-var PIXELS_PER_INCH = 96
+var PIXELS_PER_INCH = getSizeBrutal('in', document.body) // 96
+
 
 function getPropertyInPX(element, prop) {
   var parts = parseUnit(getComputedStyle(element).getPropertyValue(prop))
@@ -14,19 +15,22 @@ function getPropertyInPX(element, prop) {
 //This brutal hack is needed
 function getSizeBrutal(unit, element) {
   var testDIV = document.createElement('div')
-  testDIV.style['font-size'] = '128' + unit
+  testDIV.style['height'] = '128' + unit
   element.appendChild(testDIV)
-  var size = getPropertyInPX(testDIV, 'font-size') / 128
+  var size = getPropertyInPX(testDIV, 'height') / 128
   element.removeChild(testDIV)
   return size
 }
 
 function toPX(str, element) {
+  if (!str) return null
+
   element = element || document.body
-  str = (str || 'px').trim().toLowerCase()
+  str = (str + '' || 'px').trim().toLowerCase()
   if(element === window || element === document) {
-    element = document.body 
+    element = document.body
   }
+
   switch(str) {
     case '%':  //Ambiguous, not sure if we should use width or height
       return element.clientHeight / 100.0
@@ -55,6 +59,16 @@ function toPX(str, element) {
       return PIXELS_PER_INCH / 72
     case 'pc':
       return PIXELS_PER_INCH / 6
+    case 'px':
+      return 1
   }
-  return 1
+
+  // detect number of units
+  var parts = parseUnit(str)
+  if (!isNaN(parts[0]) && parts[1]) {
+    var px = toPX(parts[1], element)
+    return typeof px === 'number' ? parts[0] * px : null
+  }
+
+  return null
 }
