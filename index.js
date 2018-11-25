@@ -20,7 +20,7 @@ var defaults = {
 }
 
 function toPX(str) {
-  if (!str) return null
+  if (!str && str !== 0) return null
 
   if (defaults[str]) return defaults[str]
 

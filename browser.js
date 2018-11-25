@@ -23,7 +23,7 @@ function getSizeBrutal(unit, element) {
 }
 
 function toPX(str, element) {
-  if (!str) return null
+  if (!str && str !== 0) return null
 
   element = element || document.body
   str = (str + '' || 'px').trim().toLowerCase()

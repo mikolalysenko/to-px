@@ -65,6 +65,8 @@ tape('edge cases', function (t) {
 
   t.equal(toPX('10'), 10, 'number no units')
   t.equal(toPX(10), 10, 'number value')
+  t.equal(toPX('0'), 0, 'number no units')
+  t.equal(toPX(0), 0, 'number value')
 
   t.end()
 })
