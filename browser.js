@@ -65,9 +65,14 @@ function toPX(str, element) {
 
   // detect number of units
   var parts = parseUnit(str)
-  if (!isNaN(parts[0]) && parts[1]) {
-    var px = toPX(parts[1], element)
-    return typeof px === 'number' ? parts[0] * px : null
+  if (!isNaN(parts[0])) {
+    if (parts[1]) {
+      var px = toPX(parts[1], element)
+      return typeof px === 'number' ? parts[0] * px : null
+    }
+    else {
+      return parts[0]
+    }
   }
 
   return null
