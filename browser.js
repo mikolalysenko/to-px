@@ -4,9 +4,6 @@ var parseUnit = require('parse-unit')
 
 module.exports = toPX
 
-var PIXELS_PER_INCH = getSizeBrutal('in', document.body) // 96
-
-
 function getPropertyInPX(element, prop) {
   var parts = parseUnit(getComputedStyle(element).getPropertyValue(prop))
   return parts[0] * toPX(parts[1], element)
@@ -30,6 +27,8 @@ function toPX(str, element) {
   if(element === window || element === document) {
     element = document.body
   }
+
+  var PIXELS_PER_INCH = getSizeBrutal('in', document.body) // 96
 
   switch(str) {
     case '%':  //Ambiguous, not sure if we should use width or height
