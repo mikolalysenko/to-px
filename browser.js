@@ -4,8 +4,10 @@ var parseUnit = require('parse-unit')
 
 module.exports = toPX
 
-var PIXELS_PER_INCH = getSizeBrutal('in', document.body) // 96
-
+var PIXELS_PER_INCH;
+function getPixelsPerInch() {
+  PIXELS_PER_INCH = PIXELS_PER_INCH || getSizeBrutal('in', document.body);
+}
 
 function getPropertyInPX(element, prop) {
   var parts = parseUnit(getComputedStyle(element).getPropertyValue(prop))
@@ -27,11 +29,11 @@ function toPX(str, element) {
 
   element = element || document.body
   str = (str + '' || 'px').trim().toLowerCase()
-  if(element === window || element === document) {
+  if (element === window || element === document) {
     element = document.body
   }
 
-  switch(str) {
+  switch (str) {
     case '%':  //Ambiguous, not sure if we should use width or height
       return element.clientHeight / 100.0
     case 'ch':
@@ -42,23 +44,23 @@ function toPX(str, element) {
     case 'rem':
       return getPropertyInPX(document.body, 'font-size')
     case 'vw':
-      return window.innerWidth/100
+      return window.innerWidth / 100
     case 'vh':
-      return window.innerHeight/100
+      return window.innerHeight / 100
     case 'vmin':
       return Math.min(window.innerWidth, window.innerHeight) / 100
     case 'vmax':
       return Math.max(window.innerWidth, window.innerHeight) / 100
     case 'in':
-      return PIXELS_PER_INCH
+      return getPixelsPerInch()
     case 'cm':
-      return PIXELS_PER_INCH / 2.54
+      return getPixelsPerInch() / 2.54
     case 'mm':
-      return PIXELS_PER_INCH / 25.4
+      return getPixelsPerInch() / 25.4
     case 'pt':
-      return PIXELS_PER_INCH / 72
+      return getPixelsPerInch() / 72
     case 'pc':
-      return PIXELS_PER_INCH / 6
+      return getPixelsPerInch() / 6
     case 'px':
       return 1
   }
