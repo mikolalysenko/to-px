@@ -7,6 +7,7 @@ module.exports = toPX
 var PIXELS_PER_INCH;
 function getPixelsPerInch() {
   PIXELS_PER_INCH = PIXELS_PER_INCH || getSizeBrutal('in', document.body);
+  return PIXELS_PER_INCH;
 }
 
 function getPropertyInPX(element, prop) {
