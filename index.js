@@ -20,15 +20,20 @@ var defaults = {
 }
 
 function toPX(str) {
-  if (!str) return null
+  if (!str && str !== 0) return null
 
   if (defaults[str]) return defaults[str]
 
   // detect number of units
   var parts = parseUnit(str)
-  if (!isNaN(parts[0]) && parts[1]) {
-    var px = toPX(parts[1])
-    return typeof px === 'number' ? parts[0] * px : null
+  if (!isNaN(parts[0])) {
+    if (parts[1]) {
+      var px = toPX(parts[1])
+      return typeof px === 'number' ? parts[0] * px : null
+    }
+    else {
+      return parts[0]
+    }
   }
 
   return null
