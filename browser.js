@@ -4,7 +4,7 @@ var parseUnit = require('parse-unit')
 
 module.exports = toPX
 
-var PIXELS_PER_INCH = getSizeBrutal('in', document.body) // 96
+var PIXELS_PER_INCH
 
 
 function getPropertyInPX(element, prop) {
@@ -20,6 +20,13 @@ function getSizeBrutal(unit, element) {
   var size = getPropertyInPX(testDIV, 'height') / 128
   element.removeChild(testDIV)
   return size
+}
+
+function getPixelsPerInch() {
+  if (PIXELS_PER_INCH == null) {
+    PIXELS_PER_INCH = getSizeBrutal('in', document.body) // 96
+  }
+  return PIXELS_PER_INCH
 }
 
 function toPX(str, element) {
@@ -50,15 +57,15 @@ function toPX(str, element) {
     case 'vmax':
       return Math.max(window.innerWidth, window.innerHeight) / 100
     case 'in':
-      return PIXELS_PER_INCH
+      return getPixelsPerInch()
     case 'cm':
-      return PIXELS_PER_INCH / 2.54
+      return getPixelsPerInch() / 2.54
     case 'mm':
-      return PIXELS_PER_INCH / 25.4
+      return getPixelsPerInch() / 25.4
     case 'pt':
-      return PIXELS_PER_INCH / 72
+      return getPixelsPerInch() / 72
     case 'pc':
-      return PIXELS_PER_INCH / 6
+      return getPixelsPerInch() / 6
     case 'px':
       return 1
   }
